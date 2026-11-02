@@ -1,0 +1,22 @@
+{
+  "signature": "Vorname",
+  "signatureImage": null,
+  "people": [
+    {
+      "name": "Anna Beispiel",
+      "code": "4K7QM-XPA2R",
+      "lang": "de",
+      "greeting": "Liebe Anna,",
+      "message": "danke für die vielen Gespräche, die **Geduld** und dafür, dass du immer an mich geglaubt hast – auch dann, wenn ich es selbst nicht konnte.\n\nOhne dich wäre diese Arbeit nicht das geworden, was sie ist.\n\nVon Herzen,",
+      "photo": "examples/photo.svg",
+      "photoAlt": "Sanfte Hügel im Abendlicht"
+    },
+    {
+      "name": "Max Mustermann",
+      "code": "H8W3T-9ZNC6",
+      "lang": "en",
+      "greeting": "Dear Max,",
+      "messageFile": "examples/max.md"
+    }
+  ]
+}

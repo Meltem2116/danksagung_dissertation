@@ -1,0 +1,414 @@
+@font-face {
+  font-family: "Fraunces";
+  src: url("fonts/fraunces.woff2") format("woff2");
+  font-weight: 300 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Fraunces";
+  src: url("fonts/fraunces-italic.woff2") format("woff2");
+  font-weight: 300 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Caveat";
+  src: url("fonts/caveat.woff2") format("woff2");
+  font-weight: 400 700;
+  font-display: swap;
+}
+
+:root {
+  --bg: #f6ede2;
+  --blush: #f1d9c9;
+  --haze: #e3e6d3;
+  --paper: #fffaf4;
+  --ink: #3a2e28;
+  --muted: #6b5a4f;
+  --accent: #a4472c;
+  --accent-hover: #8c3a22;
+  --on-accent: #fffaf4;
+  --sage: #8b9b7a;
+  --line: #e6d6c4;
+  --field: #fffdf9;
+  --error: #9b2f2f;
+  --shadow: 0 1px 2px rgb(90 60 40 / 0.06), 0 12px 40px -12px rgb(90 60 40 / 0.22);
+  --serif: "Fraunces", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --hand: "Caveat", "Segoe Script", "Bradley Hand", cursive;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1f1916;
+    --blush: #3a2722;
+    --haze: #262a20;
+    --paper: #2a221e;
+    --ink: #f3e8dc;
+    --muted: #c4b3a5;
+    --accent: #e8a283;
+    --accent-hover: #f2b79d;
+    --on-accent: #2a1a12;
+    --sage: #a3b393;
+    --line: #45372f;
+    --field: #231c19;
+    --error: #f0a0a0;
+    --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 16px 48px -16px rgb(0 0 0 / 0.6);
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--serif);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  font-optical-sizing: auto;
+  color: var(--ink);
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(60rem 40rem at 110% -10%, var(--blush), transparent 60%),
+    radial-gradient(50rem 36rem at -20% 110%, var(--haze), transparent 60%);
+  background-attachment: fixed;
+}
+
+.top {
+  display: flex;
+  justify-content: flex-end;
+  padding: max(0.75rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) 0 1rem;
+}
+
+.lang {
+  font: inherit;
+  font-size: 0.9rem;
+  color: var(--muted);
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 0.35rem 0.9rem;
+  min-height: 44px;
+  cursor: pointer;
+}
+
+.lang:hover {
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 1rem max(2.5rem, env(safe-area-inset-bottom));
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+body.ready main {
+  opacity: 1;
+}
+
+.card {
+  width: 100%;
+  max-width: 34rem;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 1.75rem;
+  box-shadow: var(--shadow);
+  padding: 2.25rem 1.5rem 2rem;
+  transition: opacity 0.45s ease, transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.card:focus {
+  outline: none;
+}
+
+.card.leaving {
+  opacity: 0;
+  transform: translateY(-0.75rem) scale(0.99);
+}
+
+.card.entering {
+  opacity: 0;
+  transform: translateY(1.25rem);
+}
+
+.sprig {
+  display: block;
+  width: 7.5rem;
+  height: auto;
+  margin: 0 auto 0.75rem;
+  fill: var(--sage);
+}
+
+.sprig .stem {
+  fill: none;
+  stroke: var(--sage);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+}
+
+h1 {
+  font-weight: 400;
+  font-size: clamp(2.75rem, 13vw, 4rem);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  text-align: center;
+  margin: 0 0 1.25rem;
+}
+
+.lead {
+  font-size: 1.125rem;
+  text-align: center;
+  margin: 0 0 1rem;
+}
+
+.invite {
+  color: var(--muted);
+  text-align: center;
+  margin: 0 0 2rem;
+}
+
+form {
+  display: grid;
+  gap: 0.5rem;
+}
+
+label {
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+input {
+  font: inherit;
+  font-size: 1.375rem;
+  font-variant-numeric: lining-nums tabular-nums;
+  letter-spacing: 0.12em;
+  text-align: center;
+  text-transform: uppercase;
+  width: 100%;
+  min-height: 3.25rem;
+  padding: 0.6rem 0.75rem;
+  color: var(--ink);
+  background: var(--field);
+  border: 1.5px solid var(--line);
+  border-radius: 1rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input::placeholder {
+  color: var(--muted);
+  opacity: 0.55;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+input[aria-invalid="true"] {
+  border-color: var(--error);
+}
+
+.hint {
+  font-size: 0.875rem;
+  color: var(--muted);
+  margin: 0 0 0.75rem;
+}
+
+button[type="submit"],
+.back {
+  font: inherit;
+  font-weight: 500;
+  min-height: 3.25rem;
+  padding: 0.7rem 1.5rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+
+button[type="submit"] {
+  color: var(--on-accent);
+  background: var(--accent);
+  border: 0;
+}
+
+button[type="submit"]:hover {
+  background: var(--accent-hover);
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+button:focus-visible,
+.lang:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.status {
+  min-height: 1.65em;
+  margin: 0.5rem 0 0;
+  text-align: center;
+  color: var(--muted);
+}
+
+.status.error {
+  color: var(--error);
+}
+
+form[aria-busy="true"] .status::after {
+  content: "";
+  display: inline-block;
+  width: 0.4em;
+  height: 0.4em;
+  margin-left: 0.5em;
+  border-radius: 50%;
+  background: var(--sage);
+  vertical-align: middle;
+  animation: pulse 1s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+  from { opacity: 0.2; transform: scale(0.7); }
+  to { opacity: 1; transform: scale(1.2); }
+}
+
+.message {
+  max-width: 38rem;
+  padding: 2.5rem 1.5rem 2rem;
+}
+
+.letter h2 {
+  font-weight: 400;
+  font-size: clamp(1.75rem, 7vw, 2.25rem);
+  line-height: 1.2;
+  margin: 0 0 1.5rem;
+}
+
+.photo {
+  margin: 0 0 1.75rem;
+}
+
+.photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 1.25rem;
+  border: 6px solid var(--field);
+  box-shadow: var(--shadow);
+  background: var(--line);
+}
+
+.body p {
+  margin: 0 0 1.1em;
+}
+
+.body a {
+  color: var(--accent);
+  text-underline-offset: 0.2em;
+}
+
+.body ul {
+  padding-left: 1.25em;
+}
+
+.body blockquote {
+  margin: 1.5em 0;
+  padding-left: 1em;
+  border-left: 3px solid var(--sage);
+  font-style: italic;
+}
+
+.signature {
+  font-family: var(--hand);
+  font-size: 2.5rem;
+  line-height: 1.1;
+  color: var(--accent);
+  margin: 1.5rem 0 0;
+  text-align: right;
+  transform: rotate(-3deg);
+  transform-origin: right center;
+}
+
+.signature img {
+  display: inline-block;
+  max-width: 14rem;
+  max-height: 6rem;
+  height: auto;
+}
+
+@media (prefers-color-scheme: dark) {
+  .signature img {
+    filter: invert(1) hue-rotate(180deg);
+  }
+}
+
+.back-row {
+  margin: 2.5rem 0 0;
+  text-align: center;
+}
+
+.back {
+  color: var(--ink);
+  background: transparent;
+  border: 1.5px solid var(--line);
+}
+
+.back:hover {
+  border-color: var(--accent);
+}
+
+.back::before {
+  content: "← ";
+}
+
+.noscript {
+  margin: auto;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+@media (min-width: 40rem) {
+  .card {
+    padding: 3rem 3rem 2.5rem;
+  }
+
+  .message {
+    padding: 3.5rem 3.5rem 3rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}

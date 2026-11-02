@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f6ede2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1f1916" media="(prefers-color-scheme: dark)">
+<title>Danke</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/style.css">
+<script type="module" src="assets/app.js"></script>
+</head>
+<body>
+<header class="top">
+  <button type="button" id="lang" class="lang">English</button>
+</header>
+
+<main>
+  <section id="welcome" class="card" tabindex="-1" aria-labelledby="title">
+    <svg class="sprig" viewBox="0 0 120 36" aria-hidden="true" focusable="false">
+      <defs><path id="leaf" d="M0 0C4-5.5 12-5.5 17 0 12 5.5 4 5.5 0 0Z"/></defs>
+      <path class="stem" d="M6 27C36 21 72 21 114 11"/>
+      <use href="#leaf" transform="translate(22 24) rotate(-48)"/>
+      <use href="#leaf" transform="translate(26 24) rotate(28)"/>
+      <use href="#leaf" transform="translate(45 21.5) rotate(-52)"/>
+      <use href="#leaf" transform="translate(50 21.5) rotate(24)"/>
+      <use href="#leaf" transform="translate(69 19) rotate(-56)"/>
+      <use href="#leaf" transform="translate(74 18.5) rotate(18)"/>
+      <use href="#leaf" transform="translate(92 15) rotate(-58)"/>
+      <use href="#leaf" transform="translate(97 14) rotate(10)"/>
+      <use href="#leaf" transform="translate(110 12) rotate(-14)"/>
+    </svg>
+    <h1 id="title" data-t="title">Danke</h1>
+    <p class="lead" data-t="lead"></p>
+    <p class="invite" data-t="invite"></p>
+
+    <form id="form" novalidate>
+      <label for="code" data-t="label">Persönlicher Code</label>
+      <input id="code" name="code" type="text" inputmode="text" autocomplete="off" autocorrect="off"
+        autocapitalize="characters" spellcheck="false" maxlength="24" placeholder="XXXXX-XXXXX"
+        aria-describedby="hint status">
+      <p id="hint" class="hint" data-t="hint"></p>
+      <button type="submit" id="submit" data-t="open">Nachricht öffnen</button>
+      <p id="status" class="status" role="status" aria-live="polite"></p>
+    </form>
+  </section>
+
+  <article id="message" class="card message" tabindex="-1" hidden></article>
+</main>
+
+<noscript>
+  <style>main, .top { display: none; }</style>
+  <p class="noscript">Diese Seite benötigt JavaScript. · This page requires JavaScript.</p>
+</noscript>
+</body>
+</html>
