@@ -151,18 +151,14 @@ body.ready main {
   transform: translateY(1.25rem);
 }
 
-.sprig {
+.emblem {
   display: block;
-  width: 7.5rem;
+  width: 3.25rem;
   height: auto;
-  margin: 0 auto 0.75rem;
-  fill: var(--sage);
-}
-
-.sprig .stem {
+  margin: 0 auto 1rem;
   fill: none;
   stroke: var(--sage);
-  stroke-width: 1.4;
+  stroke-width: 2;
   stroke-linecap: round;
 }
 

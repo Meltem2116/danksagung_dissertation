@@ -137,6 +137,7 @@ const written = new Set();
 const rows = [["name", "code", "link"]];
 for (const person of people) {
   const payload = await payloadFor(person, config, path.dirname(inputPath));
+  if (/[–—]/.test(payload.greeting + payload.html)) console.warn(`  ! "${person.name}" contains a dash (– or —); the site avoids them.`);
   const { id, key } = await deriveKeys(person.code, params);
   await writeFile(path.join(dataDir, `${id}.bin`), await encrypt(key, id, pad(JSON.stringify(payload))));
   written.add(`${id}.bin`);

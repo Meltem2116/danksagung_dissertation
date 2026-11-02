@@ -17,7 +17,7 @@ export const TEXT = {
   en: {
     pageTitle: "Thank you",
     title: "Thank you",
-    lead: "No one writes a dissertation alone. Many people accompanied, encouraged and carried me along the way – and I am deeply grateful for that.",
+    lead: "No one writes a dissertation alone. Many people accompanied, encouraged and carried me along the way. I am deeply grateful for that.",
     invite: "Your personal code opens a message here, meant only for the person who received it.",
     label: "Personal code",
     hint: "Upper or lower case and hyphens don’t matter.",
