@@ -153,13 +153,10 @@ body.ready main {
 
 .emblem {
   display: block;
-  width: 3.25rem;
+  width: 4.75rem;
   height: auto;
-  margin: 0 auto 1rem;
-  fill: none;
-  stroke: var(--sage);
-  stroke-width: 2;
-  stroke-linecap: round;
+  margin: 0 auto 0.75rem;
+  color: var(--sage);
 }
 
 h1 {

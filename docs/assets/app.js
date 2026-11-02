@@ -1,5 +1,5 @@
-import { openMessage, normalizeCode } from "./crypto.js";
-import { TEXT } from "./text.js";
+import { openMessage, normalizeCode } from "./crypto.js?v=63abe0a94c";
+import { TEXT } from "./text.js?v=54bbe50035";
 
 const $ = (id) => document.getElementById(id);
 const form = $("form");

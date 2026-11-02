@@ -2,10 +2,11 @@
 import { readFile, writeFile, readdir, unlink, mkdir, mkdtemp, rm } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { execFileSync } from "node:child_process";
+import { createHash } from "node:crypto";
 import { tmpdir } from "node:os";
 import { parseArgs } from "node:util";
 import path from "node:path";
-import { deriveKeys, encrypt, generateCode, normalizeCode, isWellFormed, formatCode, toHex, ALPHABET, CODE_LENGTH } from "../docs/assets/crypto.js";
+import { deriveKeys, encrypt, decrypt, generateCode, normalizeCode, isWellFormed, formatCode, toHex, ALPHABET, CODE_LENGTH } from "../docs/assets/crypto.js";
 import { markdownToHtml } from "./markdown.mjs";
 import { needlesFor, findLeaks, filesUnder, filesGitWouldPublish } from "./privacy.mjs";
 import { ROOT, SITE_URL, ITERATIONS } from "./config.mjs";
@@ -110,6 +111,23 @@ async function payloadFor(person, config, baseDir) {
   return payload;
 }
 
+async function stampVersions(file, pattern, resolve) {
+  const text = await readFile(file, "utf8");
+  let out = text;
+  for (const ref of new Set([...text.matchAll(pattern)].map((m) => m[1]))) {
+    const version = createHash("sha256").update(await readFile(resolve(ref))).digest("hex").slice(0, 10);
+    out = out.replaceAll(new RegExp(`${ref.replace(/[.]/g, "\\.")}(\\?v=\\w+)?"`, "g"), `${ref}?v=${version}"`);
+  }
+  if (out !== text) await writeFile(file, out);
+}
+
+// Content hashes in asset URLs, so phones never mix cached old files with new ones.
+async function stampAssets(siteDir) {
+  const assets = path.join(siteDir, "assets");
+  await stampVersions(path.join(assets, "app.js"), /from "\.\/([\w-]+\.js)(?:\?v=\w+)?"/g, (ref) => path.join(assets, ref));
+  await stampVersions(path.join(siteDir, "index.html"), /"(assets\/[\w-]+\.(?:css|js|svg))(?:\?v=\w+)?"/g, (ref) => path.join(siteDir, ref));
+}
+
 function csv(rows) {
   return rows.map((r) => r.map((v) => `"${String(v).replace(/"/g, '""')}"`).join(",")).join("\n") + "\n";
 }
@@ -139,7 +157,10 @@ for (const person of people) {
   const payload = await payloadFor(person, config, path.dirname(inputPath));
   if (/[–—]/.test(payload.greeting + payload.html)) console.warn(`  ! "${person.name}" contains a dash (– or —); the site avoids them.`);
   const { id, key } = await deriveKeys(person.code, params);
-  await writeFile(path.join(dataDir, `${id}.bin`), await encrypt(key, id, pad(JSON.stringify(payload))));
+  const file = path.join(dataDir, `${id}.bin`);
+  const plaintext = pad(JSON.stringify(payload));
+  const unchanged = existsSync(file) && (await decrypt(key, id, await readFile(file)).catch(() => null)) === plaintext;
+  if (!unchanged) await writeFile(file, await encrypt(key, id, plaintext));
   written.add(`${id}.bin`);
   rows.push([person.name, formatCode(person.code), `${SITE_URL}#${formatCode(person.code)}`]);
   console.log(`  ✓ ${person.name.padEnd(28)} ${formatCode(person.code)}`);
@@ -151,6 +172,8 @@ for (const file of await readdir(dataDir)) {
     console.log(`  Removed stale ${file}`);
   }
 }
+
+if (existsSync(path.join(outDir, "index.html"))) await stampAssets(outDir);
 
 await mkdir(privateDir, { recursive: true });
 await writeFile(path.join(privateDir, "codes.csv"), csv(rows));
