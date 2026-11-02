@@ -94,8 +94,11 @@ function render(payload) {
   }
   parts.push(el("div", { class: "body", html: payload.html || "" }));
   const sig = payload.signature;
-  if (sig?.image) parts.push(el("p", { class: "signature" }, [el("img", { src: sig.image, alt: sig.text || "" })]));
-  else if (sig?.text) parts.push(el("p", { class: "signature", text: sig.text }));
+  if (sig?.image) {
+    const ink = el("span", { class: "sig-ink", "aria-hidden": "true" });
+    ink.style.setProperty("--sig", `url("${sig.image}")`);
+    parts.push(el("p", { class: "signature has-image" }, [el("img", { src: sig.image, alt: sig.text || "" }), ink]));
+  } else if (sig?.text) parts.push(el("p", { class: "signature", text: sig.text }));
 
   const back = el("button", { type: "button", class: "back", "data-t": "back", text: t("back") });
   back.addEventListener("click", () => {

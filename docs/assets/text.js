@@ -2,7 +2,7 @@ export const TEXT = {
   de: {
     pageTitle: "Danke",
     title: "Danke",
-    lead: "Eine Dissertation schreibt man nie allein. Viele Menschen haben mich auf diesem Weg begleitet, ermutigt und getragen – dafür bin ich von Herzen dankbar.",
+    lead: "Eine Dissertation schreibt man nie allein. Viele Menschen haben mich auf diesem Weg begleitet, ermutigt und getragen. Dafür bin ich von Herzen dankbar.",
     invite: "Mit dem persönlichen Code öffnet sich hier eine Nachricht, die nur für die Person bestimmt ist, die ihn erhalten hat.",
     label: "Persönlicher Code",
     hint: "Groß- und Kleinschreibung sowie Bindestriche spielen keine Rolle.",

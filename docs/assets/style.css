@@ -369,6 +369,33 @@ form[aria-busy="true"] .status::after {
   }
 }
 
+.signature.has-image {
+  position: relative;
+  transform: none;
+}
+
+.sig-ink {
+  display: none;
+}
+
+@supports (mask-image: url("")) or (-webkit-mask-image: url("")) {
+  .signature.has-image img {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .sig-ink {
+    display: block;
+    height: 6.5rem;
+    background: var(--accent);
+    -webkit-mask: var(--sig) right center / contain no-repeat;
+    mask: var(--sig) right center / contain no-repeat;
+  }
+}
+
 .back-row {
   margin: 2.5rem 0 0;
   text-align: center;
