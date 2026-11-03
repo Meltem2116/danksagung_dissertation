@@ -310,7 +310,10 @@ form[aria-busy="true"] .status::after {
 
 .photo img {
   display: block;
-  width: 100%;
+  width: auto;
+  max-width: 100%;
+  max-height: min(75vh, 34rem);
+  margin-inline: auto;
   height: auto;
   border-radius: 1.25rem;
   border: 6px solid var(--field);
@@ -422,6 +425,66 @@ form[aria-busy="true"] .status::after {
   .message {
     padding: 3.5rem 3.5rem 3rem;
   }
+}
+
+@media (min-width: 64rem) {
+  .message.wide {
+    max-width: 78rem;
+  }
+
+  .message.wide .body {
+    columns: 4 16rem;
+    column-gap: 3rem;
+    column-rule: 1px solid var(--line);
+    orphans: 3;
+    widows: 3;
+  }
+
+  .message.wide .photo {
+    break-inside: avoid;
+    margin: 0 0 1.25rem;
+  }
+
+  .message.wide .photo img {
+    width: 100%;
+    max-height: none;
+    border-width: 4px;
+  }
+}
+
+.photo-open {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 1.25rem;
+  background: none;
+  cursor: zoom-in;
+}
+
+.photo-open:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.lightbox {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  max-width: 96vw;
+  max-height: 96vh;
+  cursor: zoom-out;
+}
+
+.lightbox::backdrop {
+  background: rgb(20 14 10 / 0.82);
+}
+
+.lightbox img {
+  display: block;
+  max-width: 96vw;
+  max-height: 96vh;
+  border-radius: 1rem;
 }
 
 @media (prefers-reduced-motion: reduce) {

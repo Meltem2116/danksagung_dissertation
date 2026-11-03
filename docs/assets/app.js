@@ -1,5 +1,5 @@
 import { openMessage, normalizeCode } from "./crypto.js?v=63abe0a94c";
-import { TEXT } from "./text.js?v=54bbe50035";
+import { TEXT } from "./text.js?v=72bf693fd7";
 
 const $ = (id) => document.getElementById(id);
 const form = $("form");
@@ -86,13 +86,28 @@ function el(tag, attrs = {}, children = []) {
   return node;
 }
 
+function openPhoto(photo) {
+  const dialog = el("dialog", { class: "lightbox" }, [el("img", { src: photo.src, alt: photo.alt || "" })]);
+  dialog.addEventListener("click", () => dialog.close());
+  dialog.addEventListener("close", () => dialog.remove());
+  document.body.append(dialog);
+  dialog.showModal();
+}
+
 function render(payload) {
   const parts = [];
   if (payload.greeting) parts.push(el("h2", { text: payload.greeting }));
+  const body = el("div", { class: "body", html: payload.html || "" });
+  const wide = body.textContent.length > 1200;
   if (payload.photo) {
-    parts.push(el("figure", { class: "photo" }, [el("img", { src: payload.photo.src, alt: payload.photo.alt || "" })]));
+    const img = el("img", { src: payload.photo.src, alt: payload.photo.alt || "" });
+    const open = el("button", { type: "button", class: "photo-open", "aria-label": t("enlarge") }, [img]);
+    open.addEventListener("click", () => openPhoto(payload.photo));
+    const figure = el("figure", { class: "photo" }, [open]);
+    if (wide) body.prepend(figure);
+    else parts.push(figure);
   }
-  parts.push(el("div", { class: "body", html: payload.html || "" }));
+  parts.push(body);
   const sig = payload.signature;
   if (sig?.image) {
     const ink = el("span", { class: "sig-ink", "aria-hidden": "true" });
@@ -111,6 +126,7 @@ function render(payload) {
   const article = el("div", { class: "letter" }, parts);
   if (payload.lang) article.lang = payload.lang;
   message.replaceChildren(article, el("p", { class: "back-row" }, [back]));
+  message.classList.toggle("wide", wide);
   swap(welcome, message);
 }
 

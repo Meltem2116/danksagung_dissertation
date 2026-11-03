@@ -3,6 +3,7 @@ import { execFileSync } from "node:child_process";
 import path from "node:path";
 import { normalizeCode, formatCode } from "../docs/assets/crypto.js";
 
+const TITLES = new Set(["frau", "herr", "prof", "prof.", "dr.", "familie", "liebe", "lieber"]);
 const BINARY = /\.(bin|woff2?|ttf|otf|png|jpe?g|gif|webp|avif|ico|pdf)$/i;
 
 export function needlesFor(people) {
@@ -10,7 +11,7 @@ export function needlesFor(people) {
   for (const p of people) {
     if (p.name) {
       needles.add(p.name);
-      for (const word of p.name.split(/\s+/)) if (word.length >= 4) needles.add(word);
+      for (const word of p.name.split(/\s+/)) if (word.length >= 4 && !TITLES.has(word.toLowerCase())) needles.add(word);
     }
     if (p.code) {
       needles.add(normalizeCode(p.code));
