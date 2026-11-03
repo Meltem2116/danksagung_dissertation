@@ -517,3 +517,7 @@ form[aria-busy="true"] .status::after {
     animation: none !important;
   }
 }
+
+.emblem .knockout {
+  fill: var(--paper);
+}
