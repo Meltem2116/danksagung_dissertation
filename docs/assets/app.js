@@ -108,12 +108,18 @@ function render(payload) {
     else parts.push(figure);
   }
   parts.push(body);
+
+  const closing = [];
+  const last = body.lastElementChild;
+  if (last?.tagName === "P" && last.textContent.trim().length <= 40) closing.push(last);
   const sig = payload.signature;
   if (sig?.image) {
-    const ink = el("span", { class: "sig-ink", "aria-hidden": "true" });
+    if (sig.text) closing.push(el("p", { class: "sign-name", text: sig.text }));
+    const ink = el("span", { class: "sig-ink" });
     ink.style.setProperty("--sig", `url("${sig.image}")`);
-    parts.push(el("p", { class: "signature has-image" }, [el("img", { src: sig.image, alt: sig.text || "" }), ink]));
-  } else if (sig?.text) parts.push(el("p", { class: "signature", text: sig.text }));
+    closing.push(el("p", { class: "signature has-image", "aria-hidden": "true" }, [el("img", { src: sig.image, alt: "" }), ink]));
+  } else if (sig?.text) closing.push(el("p", { class: "signature", text: sig.text }));
+  if (closing.length) body.append(el("div", { class: "closing" }, closing));
 
   const back = el("button", { type: "button", class: "back", "data-t": "back", text: t("back") });
   back.addEventListener("click", () => {

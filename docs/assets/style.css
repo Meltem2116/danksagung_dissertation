@@ -341,15 +341,25 @@ form[aria-busy="true"] .status::after {
   font-style: italic;
 }
 
+.closing {
+  break-inside: avoid;
+}
+
+.closing p {
+  margin: 0;
+}
+
 .signature {
   font-family: var(--hand);
   font-size: 2.5rem;
   line-height: 1.1;
   color: var(--accent);
-  margin: 1.5rem 0 0;
-  text-align: right;
   transform: rotate(-3deg);
-  transform-origin: right center;
+  transform-origin: left center;
+}
+
+.closing .signature {
+  margin-top: 0.25rem;
 }
 
 .signature img {
@@ -385,10 +395,11 @@ form[aria-busy="true"] .status::after {
 
   .sig-ink {
     display: block;
-    height: 6.5rem;
+    max-width: 12rem;
+    height: 5.5rem;
     background: var(--accent);
-    -webkit-mask: var(--sig) right center / contain no-repeat;
-    mask: var(--sig) right center / contain no-repeat;
+    -webkit-mask: var(--sig) left center / contain no-repeat;
+    mask: var(--sig) left center / contain no-repeat;
   }
 }
 
@@ -429,12 +440,19 @@ form[aria-busy="true"] .status::after {
 
 @media (min-width: 64rem) {
   .message.wide {
-    max-width: 78rem;
+    max-width: 80rem;
+    padding: 2.5rem 3rem 2rem;
+  }
+
+  .message.wide .letter h2 {
+    margin-bottom: 1.25rem;
   }
 
   .message.wide .body {
-    columns: 4 16rem;
-    column-gap: 3rem;
+    font-size: clamp(0.95rem, 0.45rem + 1vh, 1.0625rem);
+    line-height: 1.6;
+    columns: 4 14.5rem;
+    column-gap: 2.5rem;
     column-rule: 1px solid var(--line);
     orphans: 3;
     widows: 3;
@@ -443,6 +461,10 @@ form[aria-busy="true"] .status::after {
   .message.wide .photo {
     break-inside: avoid;
     margin: 0 0 1.25rem;
+  }
+
+  .message.wide .back-row {
+    margin-top: 1.5rem;
   }
 
   .message.wide .photo img {
